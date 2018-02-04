@@ -44,7 +44,11 @@ TestSuite testSuites[] =
 	TestSuite(
 		{
 			{"write", "I will not continue writing on the writing board.", "I will not continue writing on the writing board."},
-			{"erase", "writing", "I will not continue writing on the         board."}
+			{"erase", "writing"         , "I will not continue writing on the         board."},
+			{"edit", "floor"            , "I will not continue writing on the floor   board."},
+			{"write", " test"           , "I will not continue writing on the floor   board. test"},
+			{"erase", "writing"         , "I will not continue         on the floor   board. test"},
+			{"edit", "writing test test", "I will not continue writing @@sth@e@@oor   board. test"}
 		}
 	),
 

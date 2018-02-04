@@ -106,11 +106,13 @@ bool WritingBoard::editText(std::string editText){
 					int currentEditPos = lastEraseSize+overlappedCharPos;
 					int currentBoardPos = currentEditPos + lastErasePosition;
 
-					if(currentText[currentBoardPos] != editText[currentEditPos]){
-						if( currentText[currentBoardPos] == ' ' ){
-							currentText[currentBoardPos] = editText[currentEditPos];
-						}else{
-							currentText[currentBoardPos] = '@';
+					if(editText[currentEditPos] != ' '){
+						if(currentText[currentBoardPos] != editText[currentEditPos]){
+							if( currentText[currentBoardPos] == ' ' ){
+								currentText[currentBoardPos] = editText[currentEditPos];
+							}else{
+								currentText[currentBoardPos] = '@';
+							}
 						}
 					}
 					
