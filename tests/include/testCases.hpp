@@ -63,6 +63,15 @@ TestSuite testSuites[] =
 			{"erase", "chuck", "How much wood would a woodchuck chuck if a woodchuck could       wood?"},
 			{"erase", "chuck", "How much wood would a woodchuck chuck if a wood      could       wood?"}
 		}
+	),
+
+	//Write/erase/edit test example from Kata guidelines
+	TestSuite(
+		{
+			{"write", "An onion a day keeps the doctor away", "An onion a day keeps the doctor away"},
+			{"erase", "onion"   , "An       a day keeps the doctor away"},
+			{"edit", "onion"    , "An onion a day keeps the doctor away"}
+		}
 	)
 
 };

@@ -14,8 +14,11 @@
 			std::string readText();
 			bool writeText(std::string writeText);
 			bool eraseText(std::string eraseText);
-
+			bool editText(std::string editText);
 			std::string currentText;
+
+			unsigned int lastErasePosition;
+			unsigned int lastEraseSize;
 	};
 
 
@@ -28,6 +31,7 @@
 			std::string readText();
 			bool writeText(std::string writeText);
 			bool eraseText(std::string eraseText);
+			bool editText(std::string editText);
 			bool setWritingBoard(WritingBoard * incomingWritingBoard);
 
 		private:

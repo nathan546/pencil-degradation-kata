@@ -23,6 +23,9 @@ bool Pencil::eraseText(std::string eraseText){
 		return writingBoard->eraseText(eraseText);
 }
 
+bool Pencil::editText(std::string editText){
+		return writingBoard->editText(editText);
+}
 
 bool Pencil::setWritingBoard(WritingBoard * incomingWritingBoard){
 	if(incomingWritingBoard != NULL){
@@ -68,6 +71,8 @@ bool WritingBoard::eraseText(std::string eraseText){
 		if(findPosition != std::string::npos){
 			//We found the text, replace it with spaces for its full length
 			currentText.replace(findPosition, length, length, ' ');
+			lastErasePosition = findPosition;
+			lastEraseSize = length;
 		}else{
 			return 0;
 		}
@@ -79,5 +84,34 @@ bool WritingBoard::eraseText(std::string eraseText){
 	}
 }
 
+bool WritingBoard::editText(std::string editText){
+	try{
+
+		//Do we have a last position that was erased?  If not, we don't know where to put the new word!
+		if(lastErasePosition != 0){
+
+			int length = editText.length();
+
+			if(lastEraseSize >= length){
+				currentText.replace(lastErasePosition, length, editText);
+			}else{
+
+				//We don't have enough room to place the whole word, so place what we can first, up to the size of the last erased word
+				currentText.replace(lastErasePosition, lastEraseSize, editText.substr(0, lastEraseSize));
+
+			}
+
+			lastErasePosition = 0;
+			lastEraseSize = 0;
+			return 1;
+
+		}else{
+			return 0;
+		}
+
+	}catch(...){
+		return 0;
+	}
+}
 
 
