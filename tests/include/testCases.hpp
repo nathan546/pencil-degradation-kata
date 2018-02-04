@@ -46,6 +46,14 @@ TestSuite testSuites[] =
 			{"write", "I will not continue writing on the writing board.", "I will not continue writing on the writing board."},
 			{"erase", "writing", "I will not continue writing on the         board."}
 		}
+	),
+
+	//Write test example from Kata guidelines
+	TestSuite(
+		{
+			{"write", "She sells sea shells", "She sells sea shells"},
+			{"write", " down by the sea shore", "She sells sea shells down by the sea shore"}
+		}
 	)
 
 };
