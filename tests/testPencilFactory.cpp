@@ -57,6 +57,8 @@ bool TestPencilAction::performAction(Pencil * pencil){
 
 	if(inputAction.compare("write") == 0){
 			pencil->writeText(inputText);
+	}else if(inputAction.compare("erase") == 0){
+			pencil->eraseText(inputText);
 	}
 
 	ASSERT_EQUAL(pencil->readText(), expectedResult);

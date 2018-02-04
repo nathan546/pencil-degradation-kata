@@ -16,7 +16,11 @@ std::string Pencil::readText(){
 
 
 bool Pencil::writeText(std::string writeText){
-	return writingBoard->writeText(writeText);
+		return writingBoard->writeText(writeText);
+}
+
+bool Pencil::eraseText(std::string eraseText){
+		return writingBoard->eraseText(eraseText);
 }
 
 
@@ -49,6 +53,30 @@ bool WritingBoard::writeText(std::string writeText){
 		return 0;
 	}
 
+}
+
+bool WritingBoard::eraseText(std::string eraseText){
+	try{
+
+		std::size_t findPosition;
+		std::string replace;
+		int length = eraseText.length();
+
+		//Find the text we're trying to erase, starting from the reverse
+		findPosition = currentText.rfind(eraseText);
+
+		if(findPosition != std::string::npos){
+			//We found the text, replace it with spaces for its full length
+			currentText.replace(findPosition, length, length, ' ');
+		}else{
+			return 0;
+		}
+
+		return 1;
+
+	}catch(...){
+		return 0;
+	}
 }
 
 

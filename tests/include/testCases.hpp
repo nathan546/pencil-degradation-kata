@@ -43,7 +43,8 @@ TestSuite testSuites[] =
 	//Basic write test
 	TestSuite(
 		{
-			{"write", "I will not continue writing on the writing board.", "I will not continue writing on the writing board."}	
+			{"write", "I will not continue writing on the writing board.", "I will not continue writing on the writing board."},
+			{"erase", "writing", "I will not continue writing on the         board."}
 		}
 	)
 

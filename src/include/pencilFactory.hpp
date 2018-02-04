@@ -13,7 +13,6 @@
 		private:
 			std::string readText();
 			bool writeText(std::string writeText);
-			bool editText(std::string editText);
 			bool eraseText(std::string eraseText);
 
 			std::string currentText;
@@ -28,6 +27,7 @@
 
 			std::string readText();
 			bool writeText(std::string writeText);
+			bool eraseText(std::string eraseText);
 			bool setWritingBoard(WritingBoard * incomingWritingBoard);
 
 		private:
