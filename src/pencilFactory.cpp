@@ -91,8 +91,10 @@ bool WritingBoard::editText(std::string editText){
 		if(lastErasePosition != 0){
 
 			int length = editText.length();
+			int overlappedCharPos;
+			int overlappedCharCount = length - lastEraseSize;
 
-			if(lastEraseSize >= length){
+			if(overlappedCharCount <= 0){
 				currentText.replace(lastErasePosition, length, editText);
 			}else{
 
@@ -100,9 +102,9 @@ bool WritingBoard::editText(std::string editText){
 				currentText.replace(lastErasePosition, lastEraseSize, editText.substr(0, lastEraseSize));
 
 				//Now step through the remaining characters and determine if they are to be the desired letter or an overlapped '@' character
-				for(int i = 0; i < length - lastEraseSize; i++){
-					int currentBoardPos = lastErasePosition+lastEraseSize+i;
-					int currentEditPos = lastEraseSize+i;
+				for(overlappedCharPos = 0; overlappedCharPos < overlappedCharCount; overlappedCharPos++){
+					int currentEditPos = lastEraseSize+overlappedCharPos;
+					int currentBoardPos = currentEditPos + lastErasePosition;
 
 					if(currentText[currentBoardPos] != editText[currentEditPos]){
 						if( currentText[currentBoardPos] == ' ' ){
