@@ -91,6 +91,15 @@ TestSuite testSuites[] =
 		}
 	),
 
+	//Point degradation test on an edit action
+	TestSuite(8,
+		{
+			{"write", "abcdef", "abcdef"},
+			{"erase", "def",    "abc   "},
+			{"edit",  "DEF",    "abcD  "}
+		}
+	)
+
 };
 
 

@@ -83,7 +83,12 @@ bool Pencil::eraseText(std::string eraseText){
 }
 
 bool Pencil::editText(std::string editText){
+	if(writingBoard != NULL){
+		pencilPoint->performDegradation(editText);
 		return writingBoard->editText(editText);
+	}else{
+		return 0;
+	}
 }
 
 bool Pencil::setWritingBoard(WritingBoard * incomingWritingBoard){
