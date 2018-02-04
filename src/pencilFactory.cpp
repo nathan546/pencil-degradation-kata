@@ -1,8 +1,62 @@
 #include "pencilFactory.hpp"
 
 
-Pencil::Pencil(){
 
+
+GraphitePoint::GraphitePoint(unsigned int initialDegradationValue){
+	degradationValue = initialDegradationValue;
+}
+
+
+void GraphitePoint::decrementDegradation(){
+	if(degradationValue > 0) //This is an unsigned int -- don't let it accidently roll back over to 2^32!
+		degradationValue--;
+}
+
+
+unsigned int GraphitePoint::getDegradationValue(){
+	return degradationValue;
+}
+
+
+void GraphitePoint::performDegradation(std::string &degradeText){
+
+	for(int i = 0; i < degradeText.length(); i++){
+
+		if( isupper(degradeText[i]) ){
+
+			if( getDegradationValue() < 2){
+				degradeText[i] = ' '; //replace with space if we don't have enough point durability left
+			}else{
+				decrementDegradation();
+				decrementDegradation();
+			}
+
+		}else if( islower(degradeText[i]) ){
+
+			if( getDegradationValue() < 1){
+				degradeText[i] = ' '; //replace with space if we don't have enough point durability left
+			}else{
+				decrementDegradation();
+			}
+
+		}
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+Pencil::Pencil(unsigned int pointDurability){
+	pencilPoint = new GraphitePoint(pointDurability);
 }
 
 
@@ -16,7 +70,12 @@ std::string Pencil::readText(){
 
 
 bool Pencil::writeText(std::string writeText){
+	if(writingBoard != NULL){
+		pencilPoint->performDegradation(writeText);
 		return writingBoard->writeText(writeText);
+	}else{
+		return 0;
+	}
 }
 
 bool Pencil::eraseText(std::string eraseText){
@@ -132,5 +191,6 @@ bool WritingBoard::editText(std::string editText){
 		return 0;
 	}
 }
+
 
 

@@ -29,7 +29,7 @@ class TestPencilAction{
 class TestPencilFactory{
 
 	public:
-		TestPencilFactory(WritingBoard * incomingWritingBoard);
+		TestPencilFactory(unsigned int pointDurability, WritingBoard * incomingWritingBoard);
 		~TestPencilFactory();
 		bool addTest(std::string inputAction, std::string inputText, std::string expectedResult);
 		void runAllTests();

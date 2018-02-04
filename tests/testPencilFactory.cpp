@@ -20,7 +20,7 @@ bool performTests(){
 		WritingBoard writingBoard;
 
 		//Instantiate a new pencil from the pencil factory
-		TestPencilFactory testPencilFactory(&writingBoard);
+		TestPencilFactory testPencilFactory(currentSuite.pointDurability, &writingBoard);
 
 		//For each test case within the suite:
 		for(auto currentCase : currentSuite.testCases){
@@ -85,9 +85,9 @@ bool TestPencilAction::setNextAction(TestPencilAction * incomingAction){
 
 
 
-TestPencilFactory::TestPencilFactory(WritingBoard * incomingWritingBoard){
+TestPencilFactory::TestPencilFactory(unsigned int pointDurability, WritingBoard * incomingWritingBoard){
 
-	pencil = new Pencil();
+	pencil = new Pencil(pointDurability);
 	pencil->setWritingBoard(incomingWritingBoard);
 	headAction = NULL;
 
