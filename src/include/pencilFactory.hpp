@@ -5,6 +5,18 @@
 #include <string>
 #include <iostream>
 
+	class UnidirectionalDegradationCounter{
+
+		protected:
+			UnidirectionalDegradationCounter(unsigned int initialDegradationValue);
+
+			void decrementDegradation();
+			unsigned int getDegradationValue();
+		private:
+			unsigned int degradationValue;
+	};
+
+
 	class WritingBoard {
 
 		friend class Pencil;
@@ -20,16 +32,13 @@
 			unsigned int lastEraseSize;
 	};
 
-	class GraphitePoint{
+	class GraphitePoint : UnidirectionalDegradationCounter{
 		friend class Pencil;
 
 		private:
-			GraphitePoint(unsigned int graphitePointDurability) ;
+			GraphitePoint(unsigned int graphitePointDurability) : UnidirectionalDegradationCounter(graphitePointDurability){};
 
 			void performDegradation(std::string &degradeText);
-			void decrementDegradation();
-			unsigned int getDegradationValue();
-			unsigned int degradationValue;
 	};
 
 	class Pencil{

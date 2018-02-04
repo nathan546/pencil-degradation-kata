@@ -3,20 +3,22 @@
 
 
 
-GraphitePoint::GraphitePoint(unsigned int initialDegradationValue){
+UnidirectionalDegradationCounter::UnidirectionalDegradationCounter(unsigned int initialDegradationValue){
 	degradationValue = initialDegradationValue;
 }
 
 
-void GraphitePoint::decrementDegradation(){
+void UnidirectionalDegradationCounter::decrementDegradation(){
 	if(degradationValue > 0) //This is an unsigned int -- don't let it accidently roll back over to 2^32!
 		degradationValue--;
 }
 
 
-unsigned int GraphitePoint::getDegradationValue(){
+unsigned int UnidirectionalDegradationCounter::getDegradationValue(){
 	return degradationValue;
 }
+
+
 
 
 void GraphitePoint::performDegradation(std::string &degradeText){
