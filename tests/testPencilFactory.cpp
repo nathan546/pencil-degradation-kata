@@ -11,17 +11,27 @@ bool performTests(){
 	//Reset assertion success/failure count to zero
 	RESET_ASSERTION_STATISTICS();
 
-	//Create a new writing board
-	WritingBoard writingBoard;
+	std::cout << std::endl << "Running all tests which are contained within tests/testCases.hpp" << std::endl;
 
-	//Instantiate a new pencil from the pencil factory
-	TestPencilFactory testPencilFactory(&writingBoard);
+	//For all our test suites:
+	for(TestSuite &currentSuite : testSuites){
 
-	//Add the case to our test list
-	testPencilFactory.addTest("write", "first test", "first test");
+		//Create a new writing board
+		WritingBoard writingBoard;
 
-	//Execute all the test cases which were added
-	testPencilFactory.runAllTests();
+		//Instantiate a new pencil from the pencil factory
+		TestPencilFactory testPencilFactory(&writingBoard);
+
+		//For each test case within the suite:
+		for(auto currentCase : currentSuite.testCases){
+			//Add the case to our test list
+			testPencilFactory.addTest(currentCase.operation, currentCase.inputString, currentCase.expectedString);
+		}
+
+		//Execute all the test cases which were added
+		testPencilFactory.runAllTests();
+
+	}
 
 	//Print the success/failure count after running all our tests
 	PRINT_ASSERTION_STATISTICS();
@@ -31,6 +41,7 @@ bool performTests(){
 	}else{
 		return 0;
 	}
+
 
 }
 

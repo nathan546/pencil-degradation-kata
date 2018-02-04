@@ -7,7 +7,7 @@
 #include "pencilFactory.hpp"
 #include "testPencilFactory.hpp"
 #include "assertionHelper.hpp"
-
+#include "testCases.hpp"
 
 class TestPencilAction{
 
