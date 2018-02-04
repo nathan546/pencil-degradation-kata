@@ -70,7 +70,9 @@ TestSuite testSuites[] =
 		{
 			{"write", "An onion a day keeps the doctor away", "An onion a day keeps the doctor away"},
 			{"erase", "onion"   , "An       a day keeps the doctor away"},
-			{"edit", "onion"    , "An onion a day keeps the doctor away"}
+			{"edit", "onion"    , "An onion a day keeps the doctor away"},
+			{"erase", "onion"   , "An       a day keeps the doctor away"},
+			{"edit", "artichoke", "An artich@k@ay keeps the doctor away"}
 		}
 	)
 

@@ -99,6 +99,21 @@ bool WritingBoard::editText(std::string editText){
 				//We don't have enough room to place the whole word, so place what we can first, up to the size of the last erased word
 				currentText.replace(lastErasePosition, lastEraseSize, editText.substr(0, lastEraseSize));
 
+				//Now step through the remaining characters and determine if they are to be the desired letter or an overlapped '@' character
+				for(int i = 0; i < length - lastEraseSize; i++){
+					int currentBoardPos = lastErasePosition+lastEraseSize+i;
+					int currentEditPos = lastEraseSize+i;
+
+					if(currentText[currentBoardPos] != editText[currentEditPos]){
+						if( currentText[currentBoardPos] == ' ' ){
+							currentText[currentBoardPos] = editText[currentEditPos];
+						}else{
+							currentText[currentBoardPos] = '@';
+						}
+					}
+					
+				}
+
 			}
 
 			lastErasePosition = 0;
