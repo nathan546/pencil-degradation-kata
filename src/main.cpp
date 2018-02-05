@@ -21,9 +21,9 @@ static bool productionDemonstration(){
 		pencil->writeText(repetitionPhrase);
 	}
 
-	pencil->eraseText("test case");
+	pencil->eraseText("test case\r\n");
 
-	pencil->editText("...");
+	pencil->editText("useful and relevant test case\r\n");
 
 	std::cout << pencil->readText() << std::endl;
 
