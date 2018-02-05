@@ -8,24 +8,42 @@ int main (void){
 }
 
 static bool productionDemonstration(){
+	bool ret = 1;
 	int writingRepetitions;
 	WritingBoard writingBoard;
 	Pencil * pencil;
 
 	unsigned int pencilLength = 1, pointDurability = 10000, eraserDurability = 10000;
 
-	pencil = new Pencil(pencilLength, pointDurability, eraserDurability);
-	pencil->setWritingBoard(&writingBoard);
-
-	for(writingRepetitions = 0; writingRepetitions < CHALKBOARD_PUNISHMENT_COUNT; writingRepetitions++){
-		pencil->writeText(repetitionPhrase);
+	try{
+		pencil = new Pencil(pencilLength, pointDurability, eraserDurability);
+	}catch(std::exception& e){
+		std::cout << e.what() << std::endl;
+		return 1; //Error
 	}
 
-	pencil->eraseText("test case\r\n");
+	ret &= pencil->setWritingBoard(&writingBoard);
 
-	pencil->editText("useful and relevant test case\r\n");
+	for(writingRepetitions = 0; writingRepetitions < CHALKBOARD_PUNISHMENT_COUNT; writingRepetitions++){
+		ret &= pencil->writeText(repetitionPhrase);
+		ret &= pencil->eraseText("test case\r\n");
+		ret &= pencil->editText("useful and relevant test case\r\n");
+	}
 
 	std::cout << pencil->readText() << std::endl;
 
-	delete pencil;
+	try{
+		delete pencil;
+	}catch(std::exception& e){
+		std::cout << e.what() << std::endl;
+		return 1; //Error
+	}
+
+	if(ret == 0){
+		return 1; //Error
+	}else{
+		return 0;
+	}
+
+
 }
