@@ -8,32 +8,24 @@ int main (void){
 
 bool performTests(){
 
-	//Reset assertion success/failure count to zero
 	RESET_ASSERTION_STATISTICS();
 
 	std::cout << std::endl << "Running all tests which are contained within tests/testCases.hpp" << std::endl;
 
-	//For all our test suites:
 	for(TestSuite &currentSuite : testSuites){
 
-		//Create a new writing board
 		WritingBoard writingBoard;
 
-		//Instantiate a new pencil from the pencil factory
 		TestPencilFactory testPencilFactory(currentSuite.pencilLength, currentSuite.pointDurability, currentSuite.eraserDurability, &writingBoard);
 
-		//For each test case within the suite:
 		for(auto currentCase : currentSuite.testCases){
-			//Add the case to our test list
 			testPencilFactory.addTest(currentCase.operation, currentCase.inputString, currentCase.expectedString);
 		}
 
-		//Execute all the test cases which were added
 		testPencilFactory.runAllTests();
 
 	}
 
-	//Print the success/failure count after running all our tests
 	PRINT_ASSERTION_STATISTICS();
 
 	if( HAVE_FAILURE() ){
