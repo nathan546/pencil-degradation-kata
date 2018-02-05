@@ -79,7 +79,7 @@ Pencil::Pencil( unsigned int pencilLength,
 				unsigned int eraserDurability) : UnidirectionalDegradationCounter(pencilLength){
 
 	pointDurabilityInitial = pointDurability;
-	
+
 	pencilPoint = new GraphitePoint(pointDurability);
 	pencilEraser = new Eraser(eraserDurability);
 }
@@ -206,6 +206,11 @@ bool WritingBoard::eraseText(std::string eraseText){
 	}
 }
 
+bool WritingBoard::erasedEndOfCurrentString(){
+	//Did our last erase extend to the end of the current board's string?
+	return (lastEraseSize+lastErasePosition) == currentText.length();
+}
+
 bool WritingBoard::editText(std::string editText){
 	try{
 
@@ -216,7 +221,7 @@ bool WritingBoard::editText(std::string editText){
 			int overlappedCharPos;
 			int overlappedCharCount = length - lastEraseSize;
 
-			if(overlappedCharCount <= 0){
+			if( overlappedCharCount <= 0 || erasedEndOfCurrentString() ){
 				currentText.replace(lastErasePosition, length, editText);
 			}else{
 

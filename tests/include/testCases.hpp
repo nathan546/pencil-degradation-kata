@@ -121,6 +121,15 @@ TestSuite testSuites[] =
 			{"write", "Te"      , "TextText    TextTe"},
 			{"write", "xtText"  , "TextText    TextText    "}
 		}
+	),
+
+	//Editing past the end of the string should not produce @ symbols!
+	TestSuite(UINT_MAX, UINT_MAX, UINT_MAX,
+		{
+			{"write", "An onion a day keeps the doctor away", "An onion a day keeps the doctor away"},
+			{"erase", "away", "An onion a day keeps the doctor     "},
+			{"edit", "away all day", "An onion a day keeps the doctor away all day"}
+		}
 	)
 
 

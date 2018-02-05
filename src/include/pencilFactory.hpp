@@ -26,6 +26,7 @@
 			bool editText(std::string editText);
 			std::string currentText;
 
+			bool erasedEndOfCurrentString();
 			unsigned int lastErasePosition;
 			unsigned int lastEraseSize;
 	};
