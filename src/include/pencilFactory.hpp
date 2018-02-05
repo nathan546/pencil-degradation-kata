@@ -45,7 +45,6 @@
 		friend class Pencil;
 
 		private:
-			//Constructor
 			Eraser(unsigned int eraserDurability) : UnidirectionalDegradationCounter(eraserDurability){};
 
 			unsigned int performDegradation(std::string &degradeText);
