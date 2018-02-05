@@ -225,23 +225,23 @@ bool WritingBoard::erasedEndOfCurrentString(){
 }
 
 bool WritingBoard::editingOverlappingText(std::string editText, int overlappedCharCount){
-    int overlappedCharPos;
+	int overlappedCharPos;
 
-    for(overlappedCharPos = 0; overlappedCharPos < overlappedCharCount; overlappedCharPos++){
-        int currentEditPos = lastEraseSize+overlappedCharPos;
-        int currentBoardPos = currentEditPos + lastErasePosition;
+	for(overlappedCharPos = 0; overlappedCharPos < overlappedCharCount; overlappedCharPos++){
+		int currentEditPos = lastEraseSize+overlappedCharPos;
+		int currentBoardPos = currentEditPos + lastErasePosition;
 
-        if(editText[currentEditPos] != ' '){
-            if(currentText[currentBoardPos] != editText[currentEditPos]){
-                if( currentText[currentBoardPos] == ' ' ){
-                    currentText[currentBoardPos] = editText[currentEditPos];
-                }else{
-                    currentText[currentBoardPos] = '@';
-                }
-            }
-        }
-        
-    }
+		if(editText[currentEditPos] != ' '){
+			if(currentText[currentBoardPos] != editText[currentEditPos]){
+				if( currentText[currentBoardPos] == ' ' ){
+					currentText[currentBoardPos] = editText[currentEditPos];
+				}else{
+					currentText[currentBoardPos] = '@';
+				}
+			}
+		}
+
+	}
 }
 
 bool WritingBoard::editText(std::string editText){
@@ -261,8 +261,8 @@ bool WritingBoard::editText(std::string editText){
 				//We don't have enough room to place the whole word, so place what we can first, up to the size of the last erased word
 				currentText.replace(lastErasePosition, lastEraseSize, editText.substr(0, lastEraseSize));
 
-                //Now step through the remaining characters and determine if they are to be the desired letter or an overlapped '@' character
-                editingOverlappingText(editText, overlappedCharCount);
+				//Now step through the remaining characters and determine if they are to be the desired letter or an overlapped '@' character
+				editingOverlappingText(editText, overlappedCharCount);
 
 			}
 
