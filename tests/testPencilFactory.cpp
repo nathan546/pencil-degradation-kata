@@ -1,3 +1,4 @@
+#include <exception>
 #include "testPencilFactory.hpp"
 #include "assertionHelper.hpp"
 
@@ -82,7 +83,12 @@ bool TestPencilAction::setNextAction(TestPencilAction * incomingAction){
 
 TestPencilFactory::TestPencilFactory(unsigned int pencilLength, unsigned int pointDurability, unsigned int eraserDurability, WritingBoard * incomingWritingBoard){
 
-	pencil = new Pencil(pencilLength, pointDurability, eraserDurability);
+	try{
+		pencil = new Pencil(pencilLength, pointDurability, eraserDurability);
+	}catch(std::exception& e){
+		std::cout << e.what() << std::endl;
+	}
+
 	pencil->setWritingBoard(incomingWritingBoard);
 	headAction = NULL;
 
@@ -126,7 +132,8 @@ bool TestPencilFactory::addTest(std::string initInputAction, std::string initInp
 
 	try{
 		tempAction = new TestPencilAction(initInputAction, initInputText, initExpectedResult);
-	}catch(...){
+	}catch(std::exception& e){
+		std::cout << e.what() << std::endl;
 		return 0;
 	}
 

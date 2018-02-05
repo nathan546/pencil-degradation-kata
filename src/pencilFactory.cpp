@@ -1,3 +1,4 @@
+#include <exception>
 #include "pencilFactory.hpp"
 
 UnidirectionalDegradationCounter::UnidirectionalDegradationCounter(unsigned int initialDegradationValue){
@@ -80,14 +81,23 @@ Pencil::Pencil( unsigned int pencilLength,
 
 	pointDurabilityInitial = pointDurability;
 
-	pencilPoint = new GraphitePoint(pointDurability);
-	pencilEraser = new Eraser(eraserDurability);
+	try{
+		pencilPoint = new GraphitePoint(pointDurability);
+		pencilEraser = new Eraser(eraserDurability);
+	}catch(std::exception& e){
+		std::cout << e.what() << std::endl;
+	}
+
 }
 
 
 Pencil::~Pencil(){
-	delete pencilPoint;
-	delete pencilEraser;
+	try{
+		delete pencilPoint;
+		delete pencilEraser;
+	}catch(std::exception& e){
+		std::cout << e.what() << std::endl;
+	}
 }
 
 
@@ -152,7 +162,8 @@ bool Pencil::sharpenPencil(){
 			pencilPoint = new GraphitePoint(pointDurabilityInitial);
 			
 			return 1;
-		}catch(...){
+		}catch(std::exception& e){
+			std::cout << e.what() << std::endl;
 			return 0;
 		}
 
@@ -174,7 +185,8 @@ bool WritingBoard::writeText(std::string writeText){
 	try{
 		currentText += writeText; //just concatenate it in... easy!
 		return 1;
-	}catch(...){
+	}catch(std::exception& e){
+		std::cout << e.what() << std::endl;
 		return 0;
 	}
 
@@ -201,7 +213,8 @@ bool WritingBoard::eraseText(std::string eraseText){
 
 		return 1;
 
-	}catch(...){
+	}catch(std::exception& e){
+		std::cout << e.what() << std::endl;
 		return 0;
 	}
 }
@@ -255,7 +268,8 @@ bool WritingBoard::editText(std::string editText){
 			return 0;
 		}
 
-	}catch(...){
+	}catch(std::exception& e){
+		std::cout << e.what() << std::endl;
 		return 0;
 	}
 }
