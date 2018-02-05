@@ -6,7 +6,6 @@
 #include <iostream>
 
 	class UnidirectionalDegradationCounter{
-
 		protected:
 			UnidirectionalDegradationCounter(unsigned int initialDegradationValue);
 
@@ -18,7 +17,6 @@
 
 
 	class WritingBoard {
-
 		friend class Pencil;
 
 		private:
@@ -41,9 +39,19 @@
 			void performDegradation(std::string &degradeText);
 	};
 
+	class Eraser : UnidirectionalDegradationCounter{
+		friend class Pencil;
+
+		private:
+			//Constructor
+			Eraser(unsigned int eraserDurability) : UnidirectionalDegradationCounter(eraserDurability){};
+
+			unsigned int performDegradation(std::string &degradeText);
+	};
+
 	class Pencil{
 		public:
-			Pencil(unsigned int pointDurability);
+			Pencil(unsigned int pointDurability, unsigned int eraserDurability);
 			~Pencil();
 
 			std::string readText();
@@ -55,6 +63,7 @@
 		private:
 			WritingBoard  * writingBoard;
 			GraphitePoint * pencilPoint;
+			Eraser        * pencilEraser;
 	};
 
 #endif

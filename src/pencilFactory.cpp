@@ -1,8 +1,5 @@
 #include "pencilFactory.hpp"
 
-
-
-
 UnidirectionalDegradationCounter::UnidirectionalDegradationCounter(unsigned int initialDegradationValue){
 	degradationValue = initialDegradationValue;
 }
@@ -48,6 +45,27 @@ void GraphitePoint::performDegradation(std::string &degradeText){
 
 }
 
+unsigned int Eraser::performDegradation(std::string &degradeText){
+	unsigned int length = degradeText.length();
+	unsigned int degradationValue = getDegradationValue();
+
+	//We don't have enough eraser left!
+	if(degradationValue < length){
+
+		for(int i = 0; i < degradationValue; i++)
+			decrementDegradation();
+
+		return degradationValue;
+
+	}else{
+
+		//We have enough eraser left!
+		for(int i = 0; i < length; i++)
+			decrementDegradation();
+
+		return length;
+	}
+}
 
 
 
@@ -56,13 +74,15 @@ void GraphitePoint::performDegradation(std::string &degradeText){
 
 
 
-
-Pencil::Pencil(unsigned int pointDurability){
+Pencil::Pencil(unsigned int pointDurability, unsigned int eraserDurability){
 	pencilPoint = new GraphitePoint(pointDurability);
+	pencilEraser = new Eraser(eraserDurability);
 }
 
 
 Pencil::~Pencil(){
+	delete pencilPoint;
+	delete pencilEraser;
 }
 
 
@@ -81,7 +101,22 @@ bool Pencil::writeText(std::string writeText){
 }
 
 bool Pencil::eraseText(std::string eraseText){
-		return writingBoard->eraseText(eraseText);
+	unsigned int eraseCount, eraseDifference;
+
+	if(writingBoard != NULL){
+		eraseCount = pencilEraser->performDegradation(eraseText);
+		
+		eraseDifference = eraseText.length() - eraseCount;
+
+		if(eraseDifference){
+			return writingBoard->eraseText( eraseText.substr(eraseDifference) );
+		}else{
+			return writingBoard->eraseText(eraseText);
+		}
+
+	}else{
+		return 0;
+	}
 }
 
 bool Pencil::editText(std::string editText){
