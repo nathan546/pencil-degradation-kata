@@ -1,7 +1,55 @@
 # Pencil Durability Kata
+This is a programming exercise which demonstrates how to implement a pencil class with related pencil functions using a test driven development process.  The original Kata specifications are given further down, starting at Pencil Durability Kata (from original Kata).
+
+### Installation
+This exercise was originally built using
+* Ubuntu Linux 14.04
+* GNU G++ compiler tool chain
+* GNU Make
+* git
+
+On my system, I had to install these dependencies:
+
+```sh
+$ sudo apt-get update && sudo apt-get install -y make g++
+
+```
+
+This exercise was built using very few external dependencies, for ease and portability of building.
+
+I have included a Dockerfile that can also be used under the root directory if preferred.
+
+### Downloading/Building Instructions
+
+Open a terminal
+```sh
+$ git clone https://github.com/nathan546/pencil-degradation-kata.git
+$ cd pencil-degradation-kata/
+$ make
+$ cd build
+$ ./pencilDegradation-test
+OR
+$ ./pencilDegradation-production
+```
+
+
+If using the Dockerfile instead, this will run pencilDegradation-test:
+```sh
+$ git clone https://github.com/nathan546/pencil-degradation-kata.git
+$ cd pencil-degradation-kata/
+$ sudo docker build -t pencil-degradation .
+$ sudo docker run pencil-degradation
+
+```
+You can modify the Dockerfile to run pencilDegradation-production if desired.
+
+### Software Architecture
+![Architecture Flow Chart](./documents/flowChart.png)
+
+# Pencil Durability Kata (from original Kata):
 The purpose of the Pencil Durability Kata is to write code to simulate, first coarsely and then more faithfully, an ordinary graphite pencil. It includes writing and editing text, point degradation, using the eraser, and sharpening the pencil. The point of this kata is to provide a larger-than-trivial exercise that can be used to practice TDD. A significant portion of the effort will be in determining which tests should be written and, more importantly, written next.
 
-## Write
+## Write (from original Kata):
 *As a writer  
 I want to be able use a pencil to write text on a sheet of paper  
 so that I can better remember my thoughts*  
@@ -11,7 +59,7 @@ When the pencil is instructed to write a string of text on a sheet of paper, the
 Text written by the pencil should always be appended to existing text on the paper. Thus, given a piece of paper with the text "She sells sea shells", when a pencil is instructed to write "&nbsp;down by the sea shore" on the paper, the paper will then contain the entire string (i.e. "She sells sea shells down by the sea shore").
 
 
-## Point Degradation
+## Point Degradation (from original Kata):
 *As a pencil manufacturer  
 I want writing to cause a pencil point to go dull  
 so that I can sell more pencils*  
@@ -23,7 +71,7 @@ Writing spaces and newlines expends no graphite, therefore "writing" these chara
 Lowercase letters should degrade the pencil point by a value of one, and capital letters should degrade the point by two.  Hence when a pencil with a point durability of four is instructed to write the string "text", the paper will contain the entire string.  But if a pencil with point durability of four is instructed to write the string "Text", the paper will only show "Tex&nbsp;".
 
 
-## Sharpen
+## Sharpen (from original Kata):
 *As a writer  
 I want to be able to sharpen my pencil  
 so that I can continue to write with it after it goes dull*  
@@ -33,7 +81,7 @@ When a pencil is sharpened, it regains its initial point durability and can writ
 A pencil should also be created with an initial length value. Pencils of short length will only be sharpenable a small number of times while pencils of longer length can be sharpened more times.  The pencil's length is reduced by one each time it is sharpened.  When a pencil's length is zero, then sharpening it no longer restores its point durabliity.
 
 
-## Erase
+## Erase (from original Kata):
 *As a writer  
 I want to be able to erase previously written text  
 so that I can remove my mistakes*  
@@ -48,7 +96,7 @@ and if the string "chuck" is erased again, the paper should read:
 "How much wood would a woodchuck chuck if a wood&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;could&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wood?"  
 
 
-## Eraser Degradation
+## Eraser Degradation (from original Kata):
 *As a pencil manufacturer  
 I want a pencil eraser to eventually wear out  
 so that I can sell more pencils*  
@@ -58,7 +106,7 @@ When a pencil is created, it can be provided with a value for eraser durability.
 Thus if a pencil's eraser has remaining durability of three, and it is instructed to erase the word "Bill" from "Buffalo Bill", then the text remaining on the paper is "Buffalo B&nbsp;&nbsp;&nbsp;".
 
 
-## Editing
+## Editing (from original Kata):
 *As a writer  
 I want to be able to edit previously written text  
 so that I can change my writing without starting over*  
