@@ -8,6 +8,7 @@ int main (void){
 }
 
 bool performTests(){
+	bool status;
 
 	RESET_ASSERTION_STATISTICS();
 
@@ -20,11 +21,17 @@ bool performTests(){
 		TestPencilFactory testPencilFactory(currentSuite.pencilLength, currentSuite.pointDurability, currentSuite.eraserDurability, &writingBoard);
 
 		for(auto currentCase : currentSuite.testCases){
-			testPencilFactory.addTest(currentCase.operation, currentCase.inputString, currentCase.expectedString);
+			status = testPencilFactory.addTest(currentCase.operation, currentCase.inputString, currentCase.expectedString);
+			if(status == 0){
+				return 1;
+			}
 		}
 
-		testPencilFactory.runAllTests();
-
+		status = testPencilFactory.runAllTests();
+		if(status == 0){
+			return 1;
+		}
+		
 	}
 
 	PRINT_ASSERTION_STATISTICS();
@@ -47,21 +54,21 @@ TestPencilAction::TestPencilAction(std::string initInputAction, std::string init
 }
 
 bool TestPencilAction::performAction(Pencil * pencil){
+	bool ret = 0;
 
 	if(inputAction.compare("write") == 0){
-			pencil->writeText(inputText);
+			ret = pencil->writeText(inputText);
 	}else if(inputAction.compare("erase") == 0){
-			pencil->eraseText(inputText);
+			ret = pencil->eraseText(inputText);
 	}else if(inputAction.compare("edit") == 0){
-			pencil->editText(inputText);
+			ret = pencil->editText(inputText);
 	}else if(inputAction.compare("sharpen") == 0){
-			pencil->sharpenPencil();
-			return 1; //Don't assert
+			return pencil->sharpenPencil(); //Don't assert
 	}
 
 	ASSERT_EQUAL(pencil->readText(), expectedResult);
 
-	return 1;
+	return ret;
 
 }
 
@@ -111,7 +118,7 @@ TestPencilFactory::~TestPencilFactory(){
 }
 
 
-void TestPencilFactory::runAllTests(){
+bool TestPencilFactory::runAllTests(){
 	TestPencilAction * nextAction;
 
 	if(headAction != NULL){
@@ -119,11 +126,17 @@ void TestPencilFactory::runAllTests(){
 
 		do{
 			nextAction = currentAction->getNextAction();
-			currentAction->performAction(pencil);
+
+			if(!currentAction->performAction(pencil)){
+				return 0;
+			}
+
 			currentAction = nextAction;
 		}while(nextAction != NULL);
-		
+
 	}
+
+	return 1;
 }
 
 bool TestPencilFactory::addTest(std::string initInputAction, std::string initInputText, std::string initExpectedResult){
@@ -141,8 +154,12 @@ bool TestPencilFactory::addTest(std::string initInputAction, std::string initInp
 		headAction = tempAction;
 		currentAction = tempAction;
 	}else{
-		currentAction->setNextAction(tempAction);
-		currentAction = tempAction;
+		if(currentAction->setNextAction(tempAction)){
+			currentAction = tempAction;
+		}else{
+			return 0;
+		}
+		
 	}
 
 	return 1;

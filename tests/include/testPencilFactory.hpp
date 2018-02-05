@@ -32,7 +32,7 @@ class TestPencilFactory{
 		TestPencilFactory(unsigned int pencilLength, unsigned int pointDurability, unsigned int eraserDurability, WritingBoard * incomingWritingBoard);
 		~TestPencilFactory();
 		bool addTest(std::string inputAction, std::string inputText, std::string expectedResult);
-		void runAllTests();
+		bool runAllTests();
 
 	private:	
 		TestPencilAction * headAction;
