@@ -49,9 +49,9 @@
 			unsigned int performDegradation(std::string &degradeText);
 	};
 
-	class Pencil{
+	class Pencil : UnidirectionalDegradationCounter{
 		public:
-			Pencil(unsigned int pointDurability, unsigned int eraserDurability);
+			Pencil(unsigned int pencilLength, unsigned int pointDurability, unsigned int eraserDurability);
 			~Pencil();
 
 			std::string readText();
@@ -59,11 +59,14 @@
 			bool eraseText(std::string eraseText);
 			bool editText(std::string editText);
 			bool setWritingBoard(WritingBoard * incomingWritingBoard);
+			bool sharpenPencil();
 
 		private:
 			WritingBoard  * writingBoard;
 			GraphitePoint * pencilPoint;
 			Eraser        * pencilEraser;
+			unsigned int pointDurabilityInitial;
+
 	};
 
 #endif

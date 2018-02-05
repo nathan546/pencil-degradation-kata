@@ -20,7 +20,7 @@ bool performTests(){
 		WritingBoard writingBoard;
 
 		//Instantiate a new pencil from the pencil factory
-		TestPencilFactory testPencilFactory(currentSuite.pointDurability, currentSuite.eraserDurability, &writingBoard);
+		TestPencilFactory testPencilFactory(currentSuite.pencilLength, currentSuite.pointDurability, currentSuite.eraserDurability, &writingBoard);
 
 		//For each test case within the suite:
 		for(auto currentCase : currentSuite.testCases){
@@ -61,6 +61,9 @@ bool TestPencilAction::performAction(Pencil * pencil){
 			pencil->eraseText(inputText);
 	}else if(inputAction.compare("edit") == 0){
 			pencil->editText(inputText);
+	}else if(inputAction.compare("sharpen") == 0){
+			pencil->sharpenPencil();
+			return 1; //Don't assert
 	}
 
 	ASSERT_EQUAL(pencil->readText(), expectedResult);
@@ -85,9 +88,9 @@ bool TestPencilAction::setNextAction(TestPencilAction * incomingAction){
 
 
 
-TestPencilFactory::TestPencilFactory(unsigned int pointDurability, unsigned int eraserDurability, WritingBoard * incomingWritingBoard){
+TestPencilFactory::TestPencilFactory(unsigned int pencilLength, unsigned int pointDurability, unsigned int eraserDurability, WritingBoard * incomingWritingBoard){
 
-	pencil = new Pencil(pointDurability, eraserDurability);
+	pencil = new Pencil(pencilLength, pointDurability, eraserDurability);
 	pencil->setWritingBoard(incomingWritingBoard);
 	headAction = NULL;
 

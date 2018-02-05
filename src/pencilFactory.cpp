@@ -74,7 +74,12 @@ unsigned int Eraser::performDegradation(std::string &degradeText){
 
 
 
-Pencil::Pencil(unsigned int pointDurability, unsigned int eraserDurability){
+Pencil::Pencil( unsigned int pencilLength,
+				unsigned int pointDurability,
+				unsigned int eraserDurability) : UnidirectionalDegradationCounter(pencilLength){
+
+	pointDurabilityInitial = pointDurability;
+	
 	pencilPoint = new GraphitePoint(pointDurability);
 	pencilEraser = new Eraser(eraserDurability);
 }
@@ -105,7 +110,7 @@ bool Pencil::eraseText(std::string eraseText){
 
 	if(writingBoard != NULL){
 		eraseCount = pencilEraser->performDegradation(eraseText);
-		
+
 		eraseDifference = eraseText.length() - eraseCount;
 
 		if(eraseDifference){
@@ -136,9 +141,25 @@ bool Pencil::setWritingBoard(WritingBoard * incomingWritingBoard){
 	return 0;
 }
 
+bool Pencil::sharpenPencil(){
+	//Grab a new pencil point if we have any room left to sharpen
+	if(getDegradationValue() > 0){
 
+		decrementDegradation();
 
+		try{
+			delete pencilPoint;
+			pencilPoint = new GraphitePoint(pointDurabilityInitial);
+			
+			return 1;
+		}catch(...){
+			return 0;
+		}
 
+	}
+
+	return 0;
+}
 
 
 

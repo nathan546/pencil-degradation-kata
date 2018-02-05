@@ -28,10 +28,11 @@ class TestSuite{
 
 	public:
 
-		TestSuite(unsigned int pointDura, unsigned int eraserDura, std::initializer_list<TestCase> incomingTestCases){
+		TestSuite(unsigned int pencilLen, unsigned int pointDura, unsigned int eraserDura, std::initializer_list<TestCase> incomingTestCases){
 			for(TestCase currentCase : incomingTestCases)
 				testCases.push_back(currentCase);
 
+			pencilLength = pencilLen;
 			eraserDurability = eraserDura;
 			pointDurability = pointDura;
 		}
@@ -39,6 +40,7 @@ class TestSuite{
 		std::vector<TestCase> testCases;
 		unsigned int pointDurability;
 		unsigned int eraserDurability;
+		unsigned int pencilLength;
 };
 
 
@@ -46,7 +48,7 @@ TestSuite testSuites[] =
 {
 
 	//Basic write test
-	TestSuite(UINT_MAX, UINT_MAX,
+	TestSuite(UINT_MAX, UINT_MAX, UINT_MAX,
 		{
 			{"write", "I will not continue writing on the writing board.", "I will not continue writing on the writing board."},
 			{"erase", "writing"         , "I will not continue writing on the         board."},
@@ -58,7 +60,7 @@ TestSuite testSuites[] =
 	),
 
 	//Write test example from Kata guidelines
-	TestSuite(UINT_MAX, UINT_MAX,
+	TestSuite(UINT_MAX, UINT_MAX, UINT_MAX,
 		{
 			{"write", "She sells sea shells", "She sells sea shells"},
 			{"write", " down by the sea shore", "She sells sea shells down by the sea shore"}
@@ -66,7 +68,7 @@ TestSuite testSuites[] =
 	),
 
 	//Write/erase test example from Kata guidelines
-	TestSuite(UINT_MAX, UINT_MAX,
+	TestSuite(UINT_MAX, UINT_MAX, UINT_MAX,
 		{
 			{"write", "How much wood would a woodchuck chuck if a woodchuck could chuck wood?", "How much wood would a woodchuck chuck if a woodchuck could chuck wood?"},
 			{"erase", "chuck", "How much wood would a woodchuck chuck if a woodchuck could       wood?"},
@@ -75,7 +77,7 @@ TestSuite testSuites[] =
 	),
 
 	//Write/erase/edit test example from Kata guidelines
-	TestSuite(UINT_MAX, UINT_MAX,
+	TestSuite(UINT_MAX, UINT_MAX, UINT_MAX,
 		{
 			{"write", "An onion a day keeps the doctor away", "An onion a day keeps the doctor away"},
 			{"erase", "onion"   , "An       a day keeps the doctor away"},
@@ -86,14 +88,14 @@ TestSuite testSuites[] =
 	),
 
 	//Point degradation test from Kata guidelines
-	TestSuite(4, UINT_MAX,
+	TestSuite(UINT_MAX, 4, UINT_MAX,
 		{
 			{"write", "Text", "Tex "}
 		}
 	),
 
 	//Point degradation test on an edit action
-	TestSuite(8, UINT_MAX,
+	TestSuite(UINT_MAX, 8, UINT_MAX,
 		{
 			{"write", "abcdef", "abcdef"},
 			{"erase", "def",    "abc   "},
@@ -102,12 +104,25 @@ TestSuite testSuites[] =
 	),
 
 	//Eraser degradation test from Kata guidelines
-	TestSuite(UINT_MAX, 3,
+	TestSuite(UINT_MAX, UINT_MAX, 3,
 		{
 			{"write", "Buffalo Bill", "Buffalo Bill"},
 			{"erase", "Bill", "Buffalo B   "}
 		}
+	),
+
+	//Point degradation test with a sharpening
+	TestSuite(1, 10, UINT_MAX,
+		{
+			{"write", "TextText", "TextText"},
+			{"write", "NULL"    , "TextText    "},
+			{"sharpen", "", ""},
+			{"write", "Text"    , "TextText    Text"},
+			{"write", "Te"      , "TextText    TextTe"},
+			{"write", "xtText"  , "TextText    TextText    "}
+		}
 	)
+
 
 };
 
