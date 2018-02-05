@@ -26,6 +26,7 @@
 			bool editText(std::string editText);
 			std::string currentText;
 
+            bool editingOverlappingText(std::string editText, int overlappedCharCount);
 			bool erasedEndOfCurrentString();
 			unsigned int lastErasePosition;
 			unsigned int lastEraseSize;
